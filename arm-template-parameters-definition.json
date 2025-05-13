@@ -120,7 +120,8 @@
                     "hostKeyFingerprint": "=",
                     "mlWorkspaceName": "=",
                     "domain": "=",
-                    "workspaceId": "="
+                    "workspaceId": "=",
+                    "artifactId": "="
                 }
             }
         },
