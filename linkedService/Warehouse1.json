@@ -1,0 +1,24 @@
+{
+	"name": "Warehouse1",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "Warehouse",
+		"typeProperties": {
+			"endpoint": "hbaohza75kbernxiztlxmrm4ua-tjgnmnl4wjwu7jov4e5hchwbfe.datawarehouse.fabric.microsoft.com",
+			"artifactId": "ec3b2d1c-341d-4375-9217-6aaab9fe0838",
+			"workspaceId": "35d64c9a-b27c-4f6d-a5d5-e13a711ec129",
+			"tenant": "e4e34038-ea1f-4882-b6e8-ccd776459ca0",
+			"servicePrincipalCredentialType": "ServicePrincipalKey",
+			"servicePrincipalId": "246cfd43-77c5-4c63-8f77-d6a19a3876ec",
+			"servicePrincipalCredential": {
+				"type": "AzureKeyVaultSecret",
+				"store": {
+					"referenceName": "AzureKeyVault1",
+					"type": "LinkedServiceReference"
+				},
+				"secretName": "clientSecret"
+			}
+		}
+	}
+}
