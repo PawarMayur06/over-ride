@@ -4,9 +4,13 @@ on:
   workflow_dispatch:
     inputs:
       environment:
-        description: 'Deployment environment (DEV, TEST, PROD)'
+        description: 'Select the environment for deployment'
         required: true
         default: 'DEV'
+        options:
+          - DEV
+          - TEST
+          - PROD
   
 jobs:
   build:
