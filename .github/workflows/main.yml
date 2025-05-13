@@ -2,11 +2,17 @@ name: ADF CI & CD
  
 on:
   workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Deployment environment (DEV, TEST, PROD)'
+        required: true
+        default: 'DEV'
   
 jobs:
   build:
     runs-on: ubuntu-latest
-    environment: DEV
+    environment: ${{ github.event.inputs.environment }}
+
     steps:
  
     - uses: actions/checkout@v3
@@ -59,7 +65,7 @@ jobs:
   release:
     needs: build
     runs-on: ubuntu-latest
-    environment: DEV
+    environment: ${{ github.event.inputs.environment }}
     steps:
       - name: Download a Build Artifact
         uses: actions/download-artifact@v4
