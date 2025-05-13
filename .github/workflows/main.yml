@@ -81,5 +81,5 @@ jobs:
           dataFactoryName: adf-prod-or
           armTemplateFile: ARMTemplateForFactory.json
           armTemplateParametersFile: ARMTemplateParametersForFactory.json
-          additionalParameters: 'AzureKeyVault1_properties_typeProperties_baseUrl=https://prodadfkv.vault.azure.net/ Lakehouse1_properties_typeProperties_workspaceId=4e0505fc-60ae-457c-99b6-e06fada7d921 Lakehouse1_properties_typeProperties_artifactId=1edc2ae7-abb8-4060-9afd-83b831b0ea03'
+          additionalParameters: 'AzureKeyVault1_properties_typeProperties_baseUrl=https://prodadfkv.vault.azure.net/ Lakehouse1_properties_typeProperties_workspaceId=4e0505fc-60ae-457c-99b6-e06fada7d921 Lakehouse1_properties_typeProperties_artifactId=1edc2ae7-abb8-4060-9afd-83b831b0ea03 Warehouse1_properties_typeProperties_workspaceId=4e0505fc-60ae-457c-99b6-e06fada7d921 Warehouse1_properties_typeProperties_artifactId=82564a2e-e0f6-45ff-a0a0-fd1dade06be2 Warehouse1_properties_typeProperties_endpoint=hbaohza75kbernxiztlxmrm4ua-7qcqktvomb6elgnw4bx23j6zee.datawarehouse.fabric.microsoft.com'
 
