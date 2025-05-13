@@ -1,0 +1,83 @@
+name: ADF CI & CD
+ 
+on:
+  workflow_dispatch:
+  
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    environment: DEV
+    steps:
+ 
+    - uses: actions/checkout@v3
+    
+    - name: Setup Node.js environment
+      uses: actions/setup-node@v3.4.1
+      with:
+        node-version: 18.x
+
+    # - name: Disable SSL verification globally
+    #   run: |
+    #     git config --global http.sslVerify false
+    #     npm config set strict-ssl false
+        
+    - name: install ADF Utilities package
+      run: |
+        # npm config set strict-ssl false
+        npm install
+      working-directory: ${{ github.workspace }}/
+      
+    - name: Validate
+      run: |
+        # npm config set strict-ssl false
+        npm run build validate ${{github.workspace}}/ /subscriptions/7133afd3-c71c-4f13-9320-ab6f3543c8c2/resourceGroups/mayur-rg/providers/Microsoft.DataFactory/factories/adf-dev-or
+      working-directory: ${{github.workspace}}/
+
+ 
+    - name: Validate and Generate ARM template
+      run: |
+        # npm config set strict-ssl false
+        npm run build export ${{github.workspace}}/ /subscriptions/7133afd3-c71c-4f13-9320-ab6f3543c8c2/resourceGroups/mayur-rg/providers/Microsoft.DataFactory/factories/adf-dev-or "ExportedArmTemplate" 
+      working-directory: ${{github.workspace}}/
+
+    - name: upload artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: ExportedArmTemplate 
+        path: ${{github.workspace}}/ExportedArmTemplate
+
+
+    # - name: upload artifact
+    #   uses: actions/upload-artifact@v4
+    #   env:
+    #     NODE_TLS_REJECT_UNAUTHORIZED: 0
+    #   with:
+    #     name: ExportedArmTemplate
+    #     path: ${{ github.workspace }}/ExportedArmTemplate
+
+ 
+  release:
+    needs: build
+    runs-on: self-hosted
+    environment: DEV
+    steps:
+      - name: Download a Build Artifact
+        uses: actions/download-artifact@v4
+        # env:
+        #   NODE_TLS_REJECT_UNAUTHORIZED: 0
+        with:
+          name: ExportedArmTemplate
+
+      - name: Login via Az module
+        uses: Azure/login@v2.2.0
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+          enable-AzPSSession: true
+
+      - name: data-factory-deploy
+        uses: Azure/data-factory-deploy-action@v1.2.0
+        with:
+          resourceGroupName: mayur-rg
+          dataFactoryName: adf-prod-or
+          armTemplateFile: ARMTemplateForFactory.json
+          armTemplateParametersFile: ARMTemplateParametersForFactory.json
