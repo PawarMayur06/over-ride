@@ -81,3 +81,4 @@ jobs:
           dataFactoryName: adf-prod-or
           armTemplateFile: ARMTemplateForFactory.json
           armTemplateParametersFile: ARMTemplateParametersForFactory.json
+          additionalParameters: 'AzureKeyVault1_properties_typeProperties_baseUrl=https://prodadfkv.vault.azure.net/'
