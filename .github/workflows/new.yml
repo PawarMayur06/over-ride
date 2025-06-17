@@ -1,0 +1,43 @@
+name: Echo Environment
+
+on:
+  push:
+    branches:
+      - collaboration
+      - test
+  workflow_dispatch:
+
+jobs:
+  build:
+    if: github.ref_name == 'collaboration' || github.ref_name == 'test' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Say Hello from Build
+        run: echo "Hello from Build Job"
+
+  dev-release:
+    needs: build
+    if: github.ref_name == 'collaboration'
+    runs-on: ubuntu-latest
+    environment: DEV
+    steps:
+      - name: Say Hello DEV
+        run: echo "Hello DEV Environment"
+
+  test-release:
+    needs: build
+    if: github.ref_name == 'test'
+    runs-on: ubuntu-latest
+    environment: TEST
+    steps:
+      - name: Say Hello TEST
+        run: echo "Hello TEST Environment"
+
+  prod-release:
+    needs: build
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    environment: PROD
+    steps:
+      - name: Say Hello PROD
+        run: echo "Hello PROD Environment"
